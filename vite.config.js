@@ -10,6 +10,7 @@ export default defineConfig({
     sourcemap: true,
   },
   preview: {
-    port: 8080,
+    // eslint-disable-next-line no-undef
+    port: process.env.PORT || 3000,
   },
 })
