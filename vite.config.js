@@ -9,4 +9,7 @@ export default defineConfig({
     outDir: 'build',
     sourcemap: true,
   },
+  preview: {
+    port: 8080,
+  },
 })
