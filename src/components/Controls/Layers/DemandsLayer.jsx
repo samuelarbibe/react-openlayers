@@ -1,5 +1,4 @@
-import { useState, useRef } from 'react'
-import * as turf from '@turf/turf'
+import { useRef } from 'react'
 
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
@@ -7,9 +6,6 @@ import VectorSource from 'ol/source/Vector'
 import Layer from 'components/Controls/Layers/Layer'
 
 import { useMapContext } from 'contexts/Map'
-
-const generateRandomPolygons = (count) =>
-  turf.randomPolygon(count, { num_vertices: 8 })
 
 const demandsLayer = new VectorLayer({
   source: new VectorSource(),
@@ -20,12 +16,10 @@ const demandsLayer = new VectorLayer({
   },
 })
 
-const DemandsLayer = () => {
+const DemandsLayer = ({ demands }) => {
   const layerRef = useRef(demandsLayer)
 
   const { hiddenLayers } = useMapContext()
-
-  const [demands] = useState(() => generateRandomPolygons(100))
 
   return (
     <Layer ref={layerRef} geoJSON={demands} hidden={!!hiddenLayers.demands} />

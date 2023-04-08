@@ -16,7 +16,7 @@ const Map = ({ children }) => {
 
     const newMap = new ol.Map({
       view: new ol.View({
-        center: [30, 35],
+        center: [-77.036667, 38.895],
         zoom: 4,
       }),
       target: mapContainer.current,

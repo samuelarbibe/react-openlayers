@@ -1,0 +1,13 @@
+[
+  {
+    "id": "mabat_had",
+    "name": "mabat_had",
+    "altidude": 3000,
+    "gsd": 0.2,
+    "elevationAngle": {
+      "min": 30,
+      "max": 90
+    },
+    "coneAngle": 5
+  }
+]
