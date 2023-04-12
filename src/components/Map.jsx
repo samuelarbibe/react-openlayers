@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 
 import 'ol/ol.css'
+import { fromLonLat } from 'ol/proj'
 import * as ol from 'ol'
 
 import { MapProvider } from 'contexts/Map'
 
+const center = fromLonLat([34.8068, 32.0773]);
+
 const Map = ({ children }) => {
+  const hoveredFeatureRef = useRef()
+
   const mapContainer = useRef()
   const [map, setMap] = useState()
 
@@ -16,14 +21,37 @@ const Map = ({ children }) => {
 
     const newMap = new ol.Map({
       view: new ol.View({
-        center: [-77.036667, 38.895],
-        zoom: 4,
+        center,
+        zoom: 10,
       }),
       target: mapContainer.current,
       controls: [],
     })
 
     setMap(newMap)
+  }, [map])
+
+  useEffect(() => {
+    if (!map) return
+
+    const handler = (e) => {
+      if (hoveredFeatureRef.current) {
+        hoveredFeatureRef.current.set('hovered', false)
+        hoveredFeatureRef.current = null
+      }
+
+      map.forEachFeatureAtPixel(e.pixel, function (feature) {
+        feature.set('hovered', true)
+        hoveredFeatureRef.current = feature
+        return true
+      });
+    }
+
+    map.on('pointermove', handler)
+
+    return () => {
+      map.un('pointermove', handler)
+    }
   }, [map])
 
   return (

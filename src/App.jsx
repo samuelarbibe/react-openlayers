@@ -18,23 +18,21 @@ import calculatePossibleAccesses from 'utils/accsses'
 import sensors from './utils/sensors.json'
 
 const LANE_BBOX = [
-  34.69236003680426,
-  31.93993358523032,
-  34.85306033860791,
-  32.05682879717419
+  34.59203515816651,
+  31.56272147592361,
+  34.97260031022489,
+  32.2498004537286
 ]
-
 
 const DEMAND_BBOX = [
-  34.77003379878254,
-  32.01297519343963,
-  34.775582706778614,
-  32.01783842602717
+  34.78459206286752,
+  32.073463706151045,
+  34.792669164142296,
+  32.07813236141837
 ]
 
-
 const MIN_LANE_LENGTH = 20
-const MAX_LANE_LENGTH = 40
+const MAX_LANE_LENGTH = 60
 
 const MIN_BEARING_ANGLE = -180
 const MAX_BEARING_ANGLE = 180
@@ -66,7 +64,7 @@ const App = () => {
   const [accesses, setAccesses] = useState(null)
 
   const [demands] = useState(() => generateRandomDemands(1))
-  const [lanes] = useState(() => generateRandomLanes(1))
+  const [lanes] = useState(() => generateRandomLanes(10))
 
   useEffect(() => {
     const load = () => {
@@ -74,7 +72,11 @@ const App = () => {
         (acc, lane) => {
           const laneAccesses = calculatePossibleAccesses(lane, sensors[0], {
             target: demands.features[0],
-            gsd: 0.7
+            gsd: 0.4,
+            azimuth: {
+              min: 25,
+              max: 125
+            }
           })
 
           acc.push(...laneAccesses)
@@ -88,22 +90,22 @@ const App = () => {
   }, [])
 
   return (
-    // <DrawingProvider>
-    <Map>
-      <Layers>
-        <OSMLayer />
-        <DemandsLayer demands={demands} />
-        <LanesLayer lanes={lanes} />
-        <AccessesLayer accesses={accesses} />
-        {/* <DrawingLayer /> */}
-      </Layers>
-      {/* <CustomLayers> */}
-      {/* <Controls> */}
-      {/* <MenuControl /> */}
-      {/* </Controls> */}
-      {/* </CustomLayers> */}
-    </Map>
-    // </DrawingProvider>
+    <DrawingProvider>
+      <Map>
+        <Layers>
+          <OSMLayer />
+          <DemandsLayer demands={demands} />
+          <LanesLayer lanes={lanes} />
+          <AccessesLayer accesses={accesses} />
+          <DrawingLayer />
+        </Layers>
+        <CustomLayers>
+          <Controls>
+            <MenuControl />
+          </Controls>
+        </CustomLayers>
+      </Map>
+    </DrawingProvider>
   )
 }
 

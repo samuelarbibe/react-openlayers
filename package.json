@@ -24,13 +24,15 @@
   },
   "dependencies": {
     "@turf/turf": "^6.5.0",
+    "chroma-js": "^2.4.2",
     "classnames": "^2.3.2",
     "geojson-validation": "^1.0.2",
     "immer": "^9.0.17",
     "json-format": "^1.0.1",
     "ol": "^7.2.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
